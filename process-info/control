@@ -1,16 +1,23 @@
+
 Plugin: process-info
+ Plugin which will make deeper look to processess and their usage.
 
 Maintainer: Lukas Macura <lukas@macura.cz>
 
 Item: cpu[*]
  This item will return cpu usage of given process. In zabbix, it will be prefixed automaticaly by plugin name (processlist.cpu)
-Item-cmd-cpu[*]: {PLUGINDIR}/cpu-get.sh
+
+Item-cmd-cpu[*]: {ZAFLIB} {PLUGINDIR}/cpu-get.sh
 
 Item: discovery
  Discovery of runing processes
-Item-cmd-discovery: {PLUGINDIR}/cpu-get.sh
+Item-cmd-discovery: {ZAFLIB} {PLUGINDIR}/proc-discovery.sh
 
-Binary-Depends: echo ps awk sort uniq sed
+Binary-depends: echo ps awk sort uniq sed
+
+Dpkg-depends: sed 
+
+Opkg-depends: busybox
 
 Install-bin: cpu-get.sh proc-discovery.sh
 
