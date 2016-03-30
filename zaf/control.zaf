@@ -1,0 +1,81 @@
+
+# Name of the plugin. This is singleline value
+Plugin: zaf
+
+# Description of plugin. This is multiline value
+Description::
+ Basic items for Zabbix Agent Framework
+::
+
+# Version of the plugin.
+Version: 0.3
+
+# Url of plugin location to be able to update plugin
+Url: https://raw.githubusercontent.com/limosek/zaf/master/
+
+# Homepage of plugin
+Web: https://github.com/limosek/zaf/
+
+# Maintainer
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# You can specify dependencies
+Depends-dpkg: dash curl
+Depens-opkg: busybox curl
+Depends-rpm: curl
+Depends-bin: curl
+
+# Which files to install. All files will be saved to plugin directory (without path)
+#Install-bin: bin/test.sh
+
+#Install-script::
+# cd {PLUGINDIR};
+# echo aaa
+#::
+
+#Install-cmd: {PLUGINDIR}/install.sh
+
+# List of items. Each item can have more control options.
+# Item configuration ends by white line.
+Item version:
+# Item decription
+Description::
+     Returns version of zaf installed.
+::
+
+# If item is function defined in shared library, use Function:
+Function: zaf_version
+
+# If you want to specify script directly here, use Script:
+#Script::
+##!/bin/sh
+#. {ZAFLIBDIR}/zaf/lib.sh
+#zaf_version
+#::
+
+# End of item declaration
+/Item
+
+# List of installed plugins as item
+Item plugins:
+Description::
+ Returns installed plugins
+Description::
+
+Cmd: zaf list
+/Item
+
+Item discovery.plugins:
+Description::
+ Returns installed plugins in form suitable for zabbix discovery
+Description::
+Function: zaf_discovery_plugins
+/Item
+
+Item plugin_version[*]:
+Description::
+ Returns maintainer of plugin
+Description::
+Function: zaf_plugin_version $1
+/Item
+
