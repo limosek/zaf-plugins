@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>Template Zaf processinfo</template>
-            <name>Template Zaf processinfo</name>
+            <template>Template Zaf psx</template>
+            <name>Template Zaf psx</name>
             <description/>
             <groups>
                 <group>
@@ -29,7 +29,7 @@
                     <type>0</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>ps.discovery</key>
+                    <key>psx.discovery</key>
                     <delay>300</delay>
                     <status>0</status>
                     <allowed_hosts/>

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+. ${ZAF_LIB_DIR}/zaf.lib.sh
+. ${ZAF_LIB_DIR}/os.lib.sh
+. ${ZAF_LIB_DIR}/ctrl.lib.sh
+
 if [ "${ZAF_PKG}" = "opkg" ]; then
 	AWK='{ print $2" "$5; }'
 	PS="w"
