@@ -1,0 +1,104 @@
+
+Plugin: fsx
+Description::
+ Plugin which will make deeper look into directory structure using discovery
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash curl
+Depens-opkg: busybox curl
+Depends-rpm: curl
+Depends-bin: curl find
+
+Item discovery:
+Description::
+ Discovery of files or directories
+::
+Parameters: directory mask type depth
+Type: string
+Script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/preload.sh
+
+[ -z "$1" ] && zaf_err "Directory must be entered."
+dir="$1"
+
+if [ -n "$2" ]; then
+	mask="-name '$2'"
+fi
+
+if [ -n "$3" ]; then
+	type="-type $3"
+fi
+
+if [ -n "$4" ]; then
+	depth="-maxdepth $4"
+fi
+
+zaf_dbg find "$dir" $type $depth $mask 
+eval find "$dir" $depth $type $mask | zaf_discovery '{#PATH}'
+
+::
+/Item
+
+Item pathinfo_type:
+Description::
+ Type of discovered path (d,f,l) 
+ d - directory
+ f - file
+ l - symbolink link
+::
+Parameters: discovered_path
+Type: character
+Script::
+
+. $ZAF_LIB_DIR/preload.sh
+
+[ -z "$1" ] && zaf_err "Directory must be entered."
+
+[ -f "$1" ] && echo f && exit
+[ -d "$1" ] && echo d && exit
+[ -l "$1" ] && echo l && exit
+
+::
+/Item:
+
+Item pathinfo_du:
+Description::
+ Disk usage of discovered path in bytes 
+::
+Parameters: discovered_path
+Type: integer
+Script::
+
+. $ZAF_LIB_DIR/preload.sh
+
+[ -z "$1" ] && zaf_err "Directory must be entered."
+
+du -sb "$1"  | (read sum dir; echo $sum)
+::
+/Item:
+
+Item pathinfo_items:
+Description::
+ Number of items in discovered path  (dirs+files+rest)
+::
+Parameters: discovered_path
+Type: integer
+Script::
+
+. $ZAF_LIB_DIR/preload.sh
+
+[ -z "$1" ] && zaf_err "Directory must be entered."
+
+ls -1 "$1" |wc -l
+::
+/Item:
+
+

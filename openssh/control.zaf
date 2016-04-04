@@ -1,0 +1,67 @@
+
+Plugin: openssh
+Description::
+ Plugin which will discover openssh config options and will return their values.
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/openssh
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash
+Depens-opkg: busybox
+Depends-rpm: grep
+Depends-bin: grep tr
+
+Item discovery:
+Description::
+ Discovery of enabled openssh config options
+::
+Type: script
+Parameters: sshd_config_file
+Script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/preload.sh
+
+ if [ -n "$1" ]; then
+	cfg="$1"
+ else
+	cfg=/etc/ssh/sshd_config
+ fi
+
+ grep -v '^#' "$cfg" | tr -s '\n' | \
+  while read opt; do
+	[ -n "$opt" ] && echo $opt
+  done | zaf_discovery '{#OPTION}'
+::
+/Item
+
+Item option_value:
+Description::
+ Value of enabled openssh config option
+::
+Parameters: sshd_config_file optionname
+Type: string
+Script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/preload.sh
+
+ if [ -n "$2" ]; then
+	cfg="$1"
+	opt="$2"
+	shift
+ else
+	cfg=/etc/ssh/sshd_config
+	opt="$1"
+ fi
+
+ [ -n "$opt" ] && { grep "^$opt " $cfg | cut -d ' ' -f 2- ; } || zaf_err "OptionName missing"
+::
+/Item
+
+
+
