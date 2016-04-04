@@ -17,9 +17,9 @@ Depends-bin: curl find
 
 Item discovery:
 Description::
- Discovery of files or directories
+ Discovery of files or directories. Enter % instead of * in mask.
 ::
-Parameters: directory mask type depth
+Parameters: directory mask depth type
 Type: string
 Script::
 #!/bin/sh
@@ -28,20 +28,12 @@ Script::
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
 dir="$1"
-
-if [ -n "$2" ]; then
-	mask="-name '$2'"
-fi
-
-if [ -n "$3" ]; then
-	type="-type $3"
-fi
-
+mask="-name '$(echo $2|tr '%' '*')'"
+depth="-maxdepth $3"
 if [ -n "$4" ]; then
-	depth="-maxdepth $4"
+	type="-type $4"
 fi
 
-zaf_dbg find "$dir" $type $depth $mask 
 eval find "$dir" $depth $type $mask | zaf_discovery '{#PATH}'
 
 ::
