@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-04-04T13:01:10Z</date>
+    <date>2016-04-04T13:02:31Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -9,71 +9,23 @@
     </groups>
     <templates>
         <template>
-            <template>Template Zaf</template>
-            <name>Template Zaf</name>
-            <description>Template for monitoring Zabbix Agent Framework status on host</description>
+            <template>Template Zaf openssh</template>
+            <name>Template Zaf openssh</name>
+            <description/>
             <groups>
                 <group>
                     <name>Templates</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>ZAF</name>
-                </application>
-            </applications>
-            <items>
-                <item>
-                    <name>ZAF version</name>
-                    <type>7</type>
-                    <snmp_community/>
-                    <multiplier>0</multiplier>
-                    <snmp_oid/>
-                    <key>zaf.framework_version</key>
-                    <delay>3600</delay>
-                    <history>90</history>
-                    <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <delta>0</delta>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <data_type>0</data_type>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
-                    <applications>
-                        <application>
-                            <name>ZAF</name>
-                        </application>
-                    </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                </item>
-            </items>
+            <applications/>
+            <items/>
             <discovery_rules>
                 <discovery_rule>
-                    <name>Discovery of ZAF plugins</name>
+                    <name>Openssh option discovery</name>
                     <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>zaf.discovery.plugins</key>
+                    <key>openssh.discovery</key>
                     <delay>3600</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -99,15 +51,15 @@
                         <conditions/>
                     </filter>
                     <lifetime>30</lifetime>
-                    <description/>
+                    <description>Discovery of OpenSSH options enabled in config</description>
                     <item_prototypes>
                         <item_prototype>
-                            <name>ZAF plugin {#PLUGIN} version</name>
-                            <type>0</type>
+                            <name>OpenSSH option {#OPTION}</name>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>zaf.plugin_version[{#PLUGIN}]</key>
+                            <key>openssh.option_value[{#OPTION}]</key>
                             <delay>3600</delay>
                             <history>90</history>
                             <trends>0</trends>
@@ -136,11 +88,7 @@
                             <port/>
                             <description/>
                             <inventory_link>0</inventory_link>
-                            <applications>
-                                <application>
-                                    <name>ZAF</name>
-                                </application>
-                            </applications>
+                            <applications/>
                             <valuemap/>
                             <logtimefmt/>
                             <application_prototypes/>
