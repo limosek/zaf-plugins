@@ -8,22 +8,13 @@ Version: 0.1
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/psx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
-Install-bin: cpu-get.sh proc-discovery.sh
+Install-bin: proc-discovery.sh
 
 # Dependencies
 Depends-dpkg: dash curl
 Depens-opkg: busybox curl
 Depends-rpm: curl
 Depends-bin: curl ps
-
-Item cpu:
-Parameters: process_name
-Description::
- This item will return cpu usage of given process.
- In zabbix, it will be prefixed automaticaly by plugin name (psx.cpu)
-::
-Cmd: {PLUGINDIR}/cpu-get.sh $1
-/Item
 
 Item discovery:
 Description::

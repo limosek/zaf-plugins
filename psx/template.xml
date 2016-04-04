@@ -64,7 +64,7 @@ Returns the {#PSNAME} and {#PSUSER} discovery macros which return the process na
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>proc.cpu[{#PSNAME},{#PSUSER}]</key>
+                            <key>proc.cpu.util[{#PSNAME},{#PSUSER}]</key>
                             <delay>60</delay>
                             <history>14</history>
                             <trends>365</trends>
