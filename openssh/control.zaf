@@ -4,7 +4,7 @@ Description::
  Plugin which will discover openssh config options and will return their values.
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/openssh
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -13,7 +13,7 @@ Maintainer: Lukas Macura <lukas@macura.cz>
 Depends-dpkg: dash
 Depens-opkg: busybox
 Depends-rpm: grep
-Depends-bin: grep tr
+Depends-bin: grep tr sort uniq
 
 Item discovery:
 Description::
@@ -35,7 +35,7 @@ Script::
  grep -v '^#' "$cfg" | tr -s '\n' | \
   while read opt; do
 	[ -n "$opt" ] && echo $opt
-  done | zaf_discovery '{#OPTION}'
+  done | sort | uniq | zaf_discovery '{#OPTION}'
 ::
 /Item
 

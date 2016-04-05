@@ -1,0 +1,71 @@
+
+Plugin: fail2ban
+
+Description::
+ Plugin fail2ban
+  Zaf plugin for monitoring fail2ban with LLD
+ Credits
+  2014 dron, jiri.slezka@slu.cz
+  2016 limo, lukas.macura@slu.cz
+::
+
+# Version of the plugin.
+Version: 0.1
+
+# Url of plugin location to be able to update plugin
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fail2ban
+
+# Homepage of plugin
+Web: https://github.com/limosek/zaf-plugins/
+
+# Maintainer
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash curl fail2ban sudo
+Depens-opkg: busybox curl fail2ban sudo
+Depends-rpm: curl fail2ban sudo
+Depends-bin: curl fail2ban-client sudo
+
+# We need to setup sudo to reach fail2ban-client as zabbix user
+Install-script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/zaf.lib.sh
+
+ if [ -d /etc/sudoers.d ]; then
+   echo zabbix ALL=NOPASSWD: $(which fail2ban-client) '*' >/etc/sudoers.d/zaf-fail2ban
+ else
+   zaf_wrn "Cannot setup sudo. Please do it manualy or run zabbix agent as root."
+ fi
+::
+
+Item banned_actual:
+Description::
+     Returns number of currently banned IPs for jail
+::
+Parameters: jail
+Cmd: sudo fail2ban-client status $1 | grep "Currently banned:" | grep -o -E "[0-9]*"
+/Item
+
+Item banned_total:
+Description::
+     Returns number of total banned IPs for jail
+::
+Parameters: jail
+Cmd: sudo fail2ban-client status $1 | grep "Total banned:" | grep -o -E "[0-9]*"
+/Item
+
+Item jail_discovery:
+Description::
+     Returns discovered jails
+::
+Script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/zaf.lib.sh
+sudo fail2ban-client status | grep "Jail list" |grep -E -o "([-[:alnum:]]*, )*[-[:alnum:]]*$" | zaf_discovery '{#F2BJAIL}'
+
+::
+/Item
+
