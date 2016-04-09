@@ -4,5 +4,64 @@ Please note that this plugin is very simple plugin for domonstrating possibiliti
 
 ## Usage
 
-zaf intall process-list
+```
+
+psx.discovery                                 [t|{
+ "data":[
+ {
+  "{#PSNAME}":"daemon" ,
+  "{#PSUSER}":"atd" 
+ },
+ {
+  "{#PSNAME}":"hosting" ,
+  "{#PSUSER}":"php5-fpm" 
+ },
+ {
+  "{#PSNAME}":"krtek" ,
+  "{#PSUSER}":"php5-fpm" 
+ },
+ {
+  "{#PSNAME}":"lipka" ,
+  "{#PSUSER}":"php5-fpm" 
+ },
+ {
+  "{#PSNAME}":"macura" ,
+  "{#PSUSER}":"php5-fpm" 
+ },
+ {
+  "{#PSNAME}":"memcache" ,
+  "{#PSUSER}":"memcached" 
+ },
+ {
+  "{#PSNAME}":"message+" ,
+  "{#PSUSER}":"dbus-daemon" 
+ },
+ {
+  "{#PSNAME}":"mysql" ,
+  "{#PSUSER}":"mysqld" 
+ },
+ {
+  "{#PSNAME}":"odeli" ,
+  "{#PSUSER}":"php5-fpm" 
+ },
+ {
+  "{#PSNAME}":"postfix" ,
+  "{#PSUSER}":"qmgr" 
+ },
+ {
+  "{#PSNAME}":"postfix" ,
+  "{#PSUSER}":"tlsmgr" 
+ },
+ {
+  "{#PSNAME}":"rdnssd" ,
+  "{#PSUSER}":"rdnssd" 
+ },
+ {
+  "{#PSNAME}":"root" ,
+  "{#PSUSER}":"acpid" 
+ }
+ ]
+}
+
+```
 

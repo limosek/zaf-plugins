@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-03-23T09:37:42Z</date>
+    <date>2016-04-09T10:08:50Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -20,6 +20,12 @@
             <applications>
                 <application>
                     <name>Process Statistics</name>
+                </application>
+                <application>
+                    <name>psx</name>
+                </application>
+                <application>
+                    <name>ZAF</name>
                 </application>
             </applications>
             <items/>
@@ -97,6 +103,12 @@ Returns the {#PSNAME} and {#PSUSER} discovery macros which return the process na
                                 <application>
                                     <name>Process Statistics</name>
                                 </application>
+                                <application>
+                                    <name>psx</name>
+                                </application>
+                                <application>
+                                    <name>ZAF</name>
+                                </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
@@ -141,6 +153,12 @@ Returns the {#PSNAME} and {#PSUSER} discovery macros which return the process na
                                 <application>
                                     <name>Process Statistics</name>
                                 </application>
+                                <application>
+                                    <name>psx</name>
+                                </application>
+                                <application>
+                                    <name>ZAF</name>
+                                </application>
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
@@ -184,6 +202,12 @@ Returns the {#PSNAME} and {#PSUSER} discovery macros which return the process na
                             <applications>
                                 <application>
                                     <name>Process Statistics</name>
+                                </application>
+                                <application>
+                                    <name>psx</name>
+                                </application>
+                                <application>
+                                    <name>ZAF</name>
                                 </application>
                             </applications>
                             <valuemap/>

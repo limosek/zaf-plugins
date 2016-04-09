@@ -8,7 +8,7 @@ Description::
 ::
 
 # Version of the plugin.
-Version: 0.3
+Version: 0.4
 
 # Url of plugin location to be able to update plugin
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/zaf
@@ -50,10 +50,48 @@ Function: zaf_discovery_plugins
 Item plugin_version:
 Parameters: plugin_name
 Description::
+ Returns version of plugin
+::
+Function: zaf_plugin_version $1
+/Item
+
+Item plugin_url:
+Parameters: plugin_name
+Description::
+ Returns base url of plugin
+::
+Function: zaf_plugin_url $1
+/Item
+
+Item plugin_web:
+Parameters: plugin_name
+Description::
+ Returns home url of plugin
+::
+Function: zaf_plugin_web $1
+/Item
+
+Item plugin_maintainer:
+Parameters: plugin_name
+Description::
  Returns maintainer of plugin
 ::
+Function: zaf_plugin_mainatner $1
+/Item
 
-Function: zaf_plugin_version $1
+Item plugin_items:
+Parameters: plugin_name
+Description::
+ Returns items defined in plugin
+::
+Function: zaf_list_plugin_items $1
+/Item
 
+Item plugin_template_url:
+Parameters: plugin_name
+Description::
+ Returns base template url for plugin
+::
+Function: zaf_plugin_template_url $1
 /Item
 
