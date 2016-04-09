@@ -76,7 +76,7 @@ Parameters: plugin_name
 Description::
  Returns maintainer of plugin
 ::
-Function: zaf_plugin_mainatner $1
+Function: zaf_plugin_maintainer $1
 /Item
 
 Item plugin_items:
