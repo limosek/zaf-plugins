@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -15,17 +15,33 @@ Depens-opkg: busybox curl
 Depends-rpm: curl
 Depends-bin: curl find
 
+# Sudo needed. It will be preconfigured if sudo is installed
+Sudo: /usr/bin/find %, {PLUGINDIR}/%sh %
+
+# Cron for info about busy directories
+# This is only example to get disk usage of common /var dirs
+#Cron::
+#0 * * * * (zabbix zaf precache 'fsx.pathinfo_du[asroot,/var/]' && zaf precache 'fsx.pathinfo_du[asroot,/var/mail]' && zaf precache 'fsx.pathinfo_du[asroot,/var/lib]') >/dev/null 2>/dev/#null
+#::
+
 Item discovery:
 Description::
- Discovery of files or directories. Enter % instead of * in mask.
+ Discovery of files or directories. Enter % instead of * in mask. If first argument is "asroot", sudo will be used. It must be configured.
 ::
-Parameters: directory mask depth type
+Parameters: asroot directory mask depth type
 Type: string
+Cache: 3600
 Script::
 #!/bin/sh
 
+case $1 in
+asroot)
+  shift; exec sudo -E -n $0 "$@";;
+aszabbix)
+  shift;;
+esac
 . $ZAF_LIB_DIR/preload.sh
-
+ 
 [ -z "$1" ] && zaf_err "Directory must be entered."
 dir="$1"
 mask="-name '$(echo $2|tr '%' '*')'"
@@ -46,10 +62,17 @@ Description::
  f - file
  l - symbolink link
 ::
-Parameters: discovered_path
+Parameters: asroot discovered_path
 Type: character
 Script::
+#!/bin/sh
 
+case $1 in
+asroot)
+  shift; exec sudo -E -n $0 "$@";;
+aszabbix)
+  shift;;
+esac
 . $ZAF_LIB_DIR/preload.sh
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
@@ -65,10 +88,18 @@ Item pathinfo_du:
 Description::
  Disk usage of discovered path in bytes 
 ::
-Parameters: discovered_path
+Parameters: asroot discovered_path
 Type: integer
+Cache: 3600
 Script::
+#!/bin/sh
 
+case $1 in
+asroot)
+  shift; exec sudo -E -n $0 "$@";;
+aszabbix)
+  shift;;
+esac
 . $ZAF_LIB_DIR/preload.sh
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
@@ -81,10 +112,18 @@ Item pathinfo_items:
 Description::
  Number of items in discovered path  (dirs+files+rest)
 ::
-Parameters: discovered_path
+Parameters: asroot discovered_path
 Type: integer
+Cache: 600
 Script::
+#!/bin/sh
 
+case $1 in
+asroot)
+  shift; exec sudo -E -n $0 "$@";;
+aszabbix)
+  shift;;
+esac
 . $ZAF_LIB_DIR/preload.sh
 
 [ -z "$1" ] && zaf_err "Directory must be entered."

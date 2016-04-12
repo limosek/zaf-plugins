@@ -9,7 +9,7 @@ Description::
 ::
 
 # Version of the plugin.
-Version: 0.1
+Version: 0.2
 
 # Url of plugin location to be able to update plugin
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fail2ban
@@ -26,18 +26,7 @@ Depens-opkg: busybox curl fail2ban sudo
 Depends-rpm: curl fail2ban sudo
 Depends-bin: curl fail2ban-client sudo
 
-# We need to setup sudo to reach fail2ban-client as zabbix user
-Install-script::
-#!/bin/sh
-
-. $ZAF_LIB_DIR/zaf.lib.sh
-
- if [ -d /etc/sudoers.d ]; then
-   echo zabbix ALL=NOPASSWD: $(which fail2ban-client) '*' >/etc/sudoers.d/zaf-fail2ban
- else
-   zaf_wrn "Cannot setup sudo. Please do it manualy or run zabbix agent as root."
- fi
-::
+Sudo: fail2ban-client %
 
 Item banned_actual:
 Description::
