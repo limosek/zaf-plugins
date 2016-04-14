@@ -1,12 +1,12 @@
 Plugin: openvpn
+
 Description::
- Plugin for OpenVPN users monitoring. It shows an OpenVPN user’s status, and its uplink and downlink traffic. The “hosts” by the files certificates names are made using LLD.
+ Plugin for OpenVPN users monitoring. It shows an OpenVPN user’s status, and its uplink and downlink traffic. The hosts by the files certificates names are made using LLD.
 ::
 
 Version: 0.1
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/psx
 Web: https://github.com/Grifagor/zabbix-openvpn
-Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
 Depends-dpkg: dash curl
