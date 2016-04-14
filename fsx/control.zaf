@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.3
+Version: 0.4
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -20,9 +20,9 @@ Sudo: /usr/bin/find %, {PLUGINDIR}/%sh %
 
 # Cron for info about busy directories
 # This is only example to get disk usage of common /var dirs
-#Cron::
-#0 * * * * (zabbix zaf precache 'fsx.pathinfo_du[asroot,/var/]' && zaf precache 'fsx.pathinfo_du[asroot,/var/mail]' && zaf precache 'fsx.pathinfo_du[asroot,/var/lib]') >/dev/null 2>/dev/#null
-#::
+Cron::
+0 */8 * * * root zaf precache fsx >/dev/null 2>/dev/null
+::
 
 Item discovery:
 Description::
@@ -38,8 +38,8 @@ Description::
 Parameters: {asroot|aszabbix} directory mask maxdepth type sort maxobjects
 Type: string
 Testparameters: aszabbix,/tmp/,%,10,d,name/+,0 aszabbix,/tmp/,%,10,d,du/+,10 asroot,/var/lib/dpkg/,%,1,d,name/-,10
-Precache: aszabbix,/tmp/,%,10,d,name/+,0 asroot,/var/,%,100,d,du/-,100
-Cache: 3600
+Precache: asroot,/var/,%,100,d,du/-,100
+Cache: 86400
 Script::
 #!/bin/sh
 
@@ -72,8 +72,8 @@ name)
 	eval find "$dir" $depth $type $mask | sort $so | $head | zaf_discovery '{#PATH}'
 	;;
 du)
-	zaf_dbg find "$dir" $depth $type $mask \| xargs du \| sort -n $so \| $head \| zaf_discovery '{#PATH}'
-	eval find "$dir" $depth $type $mask | xargs du | sort -n $so | tr '\t' ' ' | cut -d ' ' -f 2 | $head |zaf_discovery '{#PATH}'
+	zaf_dbg find "$dir" $depth $type $mask -print0 \| xargs -0 du \| sort -n $so \| $head \| zaf_discovery '{#PATH}'
+	eval find "$dir" $depth $type $mask -print0 | xargs -0 du | sort -n $so | tr '\t' ' ' | cut -d ' ' -f 2 | $head |zaf_discovery '{#PATH}'
 	;;
 esac
 ::
