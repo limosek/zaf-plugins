@@ -1,0 +1,96 @@
+
+Plugin: tcqos
+Description::
+ Plugin which will look and discover linux qos using tc command 
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/tcqos
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash curl iproute
+Depens-opkg: busybox curl ip
+Depends-rpm: curl
+Depends-bin: curl tc
+
+Item discovery_interfaces:
+Description::
+ Discovery of tc enabled interfaces
+::
+Script: {INCLUDES} tc qdisc show | sed 's/.*dev \([\_a-z0-9\-]*\).*/\1/' | sort | uniq | zaf_discovery '{#IFACE}'
+/Item
+
+Item discovery_classes:
+Description::
+ Discovery of tc classes
+::
+Script::
+{INCLUDES}
+ifs=$(tc qdisc show | sed 's/.*dev \([\_a-z0-9\-]*\).*/\1/' | sort | uniq)
+for i in $ifs; do
+  tc class ls dev $i |cut -d ' ' -f 2,3,5 | while read type id parent; do
+    echo $i $type $id $parent
+  done | zaf_discovery '{#IFACE}' '{#TYPE}' '{#ID}' '{#PARENT}'
+done
+::
+/Item
+
+Item discovery_qdiscs:
+Parameters: interface
+Description::
+ Discovery of tc qdiscs
+::
+Script: {INCLUDES} tc qdisc show |cut -d ' ' -f 2,3,5,7 | zaf_discovery '{#TYPE}' '{#ID}' '{#IFACE}' '{#PARENT}'
+/Item
+
+Item qdisc_limit:
+Parameters: interface id
+Description::
+ Show limit of given qdisc handle 
+::
+Script: {INCLUDES} tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $7 }' | tr -d 'p'
+/Item
+
+Item qdisc_flows:
+Parameters: interface id
+Description::
+ Show flows of given qdisc handle 
+::
+Script: {INCLUDES} tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $9 }' | tr -d 'p'
+/Item
+
+Item class_sentbytes:
+Parameters: interface id
+Description::
+ Show bytes sent to this class
+::
+Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $2 }'
+/Item
+
+Item class_sentpackets:
+Parameters: interface id
+Description::
+ Show packets sent to this class
+::
+Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $4 }'
+/Item
+
+Item class_dropped:
+Parameters: interface id
+Description::
+ Show dropped packets in this class
+::
+Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $7 }' | tr -d ','
+/Item
+
+Item class_overlimit:
+Parameters: interface id
+Description::
+ Show overlimit packets in this class
+::
+Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $9 }' | tr -d ','
+/Item
+
+

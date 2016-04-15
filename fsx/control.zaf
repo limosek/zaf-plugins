@@ -16,7 +16,7 @@ Depends-rpm: curl
 Depends-bin: curl find
 
 # Sudo needed. It will be preconfigured if sudo is installed
-Sudo: /usr/bin/find %, {PLUGINDIR}/%sh %
+Sudo: find %, {PLUGINDIR}/%sh %
 
 # Cron for info about busy directories
 # This is only example to get disk usage of common /var dirs
