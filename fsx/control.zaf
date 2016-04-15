@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.4
+Version: 0.5
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -93,9 +93,9 @@ Script::
 #!/bin/sh
 
 case $1 in
-asroot)
+asroot|root)
   shift; exec sudo -E -n $0 "$@";;
-aszabbix)
+aszabbix|zabbix)
   shift;;
 esac
 . $ZAF_LIB_DIR/preload.sh
@@ -121,9 +121,9 @@ Script::
 #!/bin/sh
 
 case $1 in
-asroot)
+asroot|root)
   shift; exec sudo -E -n $0 "$@";;
-aszabbix)
+aszabbix|zabbix)
   shift;;
 esac
 . $ZAF_LIB_DIR/preload.sh
@@ -146,9 +146,9 @@ Script::
 #!/bin/sh
 
 case $1 in
-asroot)
+asroot|root)
   shift; exec sudo -E -n $0 "$@";;
-aszabbix)
+aszabbix|zabbix)
   shift;;
 esac
 . $ZAF_LIB_DIR/preload.sh
