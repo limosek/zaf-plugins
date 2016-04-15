@@ -1,0 +1,65 @@
+Plugin: openvpn
+
+Description::
+ Plugin for OpenVPN users monitoring. It shows an OpenVPN user’s status, and its uplink and downlink traffic. The hosts by the files certificates names are made using LLD.
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/psx
+Web: https://github.com/Grifagor/zabbix-openvpn
+
+# Dependencies
+Depends-dpkg: dash curl
+Depens-opkg: busybox curl
+Depends-rpm: curl
+Depends-bin: curl ps
+
+Item discovery_users:
+Parameters: ccd_dir
+Description::
+ Discovery of openvpn users
+::
+Script::
+#!/bin/sh
+
+. $ZAF_LIB_DIR/zaf.lib.sh
+
+path="$1"
+[ -z "$path" ] && zaf_error "Missing parameter path!"
+
+ls -F $path | sed 's/\///g' | zaf_discovery '{#VPNUSER}'
+::
+/Item
+
+Item user_status:
+Parameters: user
+Description::
+ User status
+::
+Cmd: cat /var/log/openvpn-status.log | grep "$1" >/dev/null && echo 1 || echo 0
+/Item
+
+Item num_users:
+Description::
+ Number of users
+::
+Cmd: cat /var/log/openvpn-status.log | sed -n '/Connected Since/,/ROUTING/p' | sed -e '1d' -e '$d' | wc -l
+/Item
+
+Item user_received_bytes:
+Description::
+ Number of bytes received by user
+::
+Parameters: user
+Cmd:  cat /var/log/openvpn-status.log | grep $1 | tr "," "\n" | sed -n '3p'
+/Item
+
+Item user_sent_bytes:
+Description::
+ Number of bytes sent by user
+::
+Parameters: user
+Cmd:  cat /var/log/openvpn-status.log | grep "$1" | tr "," "\n" | sed -n '4p'
+/Item
+
+
