@@ -31,11 +31,11 @@
             <items/>
             <discovery_rules>
                 <discovery_rule>
-                    <name>ZAF fsx discovery of biggest directories in /var</name>
+                    <name>ZAF fsx discovery of biggest directories in {$FSX_DIR}</name>
                     <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>fsx.discovery[{$FSX_USER},/var/,%,100,d,du/-,100]</key>
+                    <key>fsx.discovery[{$FSX_USER},{$FSX_DIR},%,100,d,du/-,100]</key>
                     <delay>300</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -61,7 +61,7 @@
                         <conditions/>
                     </filter>
                     <lifetime>30</lifetime>
-                    <description>Discover directories under /var</description>
+                    <description>Discover directories under {$FSX_DIR}</description>
                     <item_prototypes>
                         <item_prototype>
                             <name>Path {#PATH} disk usage</name>
@@ -169,7 +169,16 @@
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
-            <macros/>
+            <macros>
+ 		<macro>
+                    <macro>{$FSX_USER}</macro>
+                    <value>zabbix</value>
+                </macro>
+		    <macro>
+                    <macro>{$FSX_DIR}</macro>
+                    <value>/var/</value>
+                </macro>
+	    </macros>
             <templates/>
             <screens/>
         </template>

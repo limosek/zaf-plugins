@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.5
+Version: 0.6
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -49,7 +49,7 @@ asroot|root)
 aszabbix|zabbix)
   shift;;
 esac
-. $ZAF_LIB_DIR/preload.sh
+{INCLUDES}
  
 [ "$#" -lt 6 ] && zaf_err "Bad parameters!"
 dir="$1"
@@ -98,7 +98,7 @@ asroot|root)
 aszabbix|zabbix)
   shift;;
 esac
-. $ZAF_LIB_DIR/preload.sh
+{INCLUDES}
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
 
@@ -126,7 +126,7 @@ asroot|root)
 aszabbix|zabbix)
   shift;;
 esac
-. $ZAF_LIB_DIR/preload.sh
+{INCLUDES}
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
 
@@ -151,7 +151,7 @@ asroot|root)
 aszabbix|zabbix)
   shift;;
 esac
-. $ZAF_LIB_DIR/preload.sh
+{INCLUDES}
 
 [ -z "$1" ] && zaf_err "Directory must be entered."
 
