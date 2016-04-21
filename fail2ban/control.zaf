@@ -9,7 +9,7 @@ Description::
 ::
 
 # Version of the plugin.
-Version: 0.2
+Version: 0.3
 
 # Url of plugin location to be able to update plugin
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fail2ban
@@ -32,7 +32,9 @@ Item banned_actual:
 Description::
      Returns number of currently banned IPs for jail
 ::
-Parameters: jail
+Parameters::
+ jail	''	''
+::
 Cmd: sudo fail2ban-client status $1 | grep "Currently banned:" | grep -o -E "[0-9]*"
 /Item
 
@@ -40,7 +42,9 @@ Item banned_total:
 Description::
      Returns number of total banned IPs for jail
 ::
-Parameters: jail
+Parameters::
+ jail	''	''
+::
 Cmd: sudo fail2ban-client status $1 | grep "Total banned:" | grep -o -E "[0-9]*"
 /Item
 
@@ -48,12 +52,6 @@ Item jail_discovery:
 Description::
      Returns discovered jails
 ::
-Script::
-#!/bin/sh
-
-. $ZAF_LIB_DIR/zaf.lib.sh
-sudo fail2ban-client status | grep "Jail list" |grep -E -o "([-[:alnum:]]*, )*[-[:alnum:]]*$" | zaf_discovery '{#F2BJAIL}'
-
-::
+Script: sudo fail2ban-client status | grep "Jail list" |grep -E -o "([-[:alnum:]]*, )*[-[:alnum:]]*$" | zaf_discovery '{#F2BJAIL}'
 /Item
 

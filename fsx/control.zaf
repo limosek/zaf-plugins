@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.6
+Version: 0.7
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -27,55 +27,59 @@ Cron::
 Item discovery:
 Description::
  Discovery of files or directories. 
-  {asroot|aszabbix} - which permissions to use. Sudo must be installed for asroot
-  directory - directory to scan
-  mask - mask to search. Use % instead of * in mask. Like '%' to find all objects, '%.txt' to find all .txt files
-  maxdepth - depth to search. 1 means only one directory, not subdirs
-  type - Type of objects to find (f=file,d=dir,l=link)
-  sort - how to sort results (name/[+-], du/[+-])
-  maxobjects - maximum objects to find. 0 means no limit.
 ::
-Parameters: {asroot|aszabbix} directory mask maxdepth type sort maxobjects
+Parameters::
+ directory 	''		''			# directory to scan
+ mask 		%		''			# mask to search. Use % instead of * in mask. Like '%' to find all objects, '%.txt' to find all .txt files.
+ type 		d		'^(d|f|l)$'		# Type of objects to find (f=file,d=dir,l=link)
+ maxdepth 	1		''			# depth to search. 1 means only one directory, not subdirs.
+ sort 		du/-	 	'^(du|name)/([+-])$'	# how to sort results (name/[+-], du/[+-]).
+ maxobjects 	50		''			# maximum objects to find. 0 means no limit.
+ who 		zabbix 		'^(root|zabbix)$'	# which permissions to use. Sudo must be installed for root. Default is zabbix
+::
 Type: string
-Testparameters: aszabbix,/tmp/,%,10,d,name/+,0 aszabbix,/tmp/,%,10,d,du/+,10 asroot,/var/lib/dpkg/,%,1,d,name/-,10
-Precache: asroot,/var/,%,100,d,du/-,100
+Testparameters: /tmp/ /tmp/,%,f,1,name/+,10,root
+Precache: /tmp/
 Cache: 86400
 Script::
-#!/bin/sh
 
-case $1 in
+case $who in
 asroot|root)
-  shift; exec sudo -E -n $0 "$@";;
-aszabbix|zabbix)
-  shift;;
+  ! zaf_is_root && exec sudo -E -n $0 "$@";;
 esac
-{INCLUDES}
- 
-[ "$#" -lt 6 ] && zaf_err "Bad parameters!"
-dir="$1"
-mask="-name '$(echo $2|tr '%' '*')'"
-depth="-maxdepth $3"
-type="-type $4"
-sort="$(echo $5|cut -d '/' -f 1)"
-sortorder="$(echo $5|cut -d '/' -f 2)"
+
+mask="-name '$(echo $mask|tr '%' '*')'"
+depth="-maxdepth $maxdepth"
+type="-type $type"
+
+sorttype="$(echo $sort|cut -d '/' -f 1)"
+sortorder="$(echo $sort|cut -d '/' -f 2)"
 [ "$sortorder" = "-" ] && so="-r"
-maxobjects=$6
+
 if [ "$maxobjects" -gt 0 ]; then
  head="head -n $maxobjects"
 else
  head="cat"
 fi
 
-case $sort in
+tmpf=$ZAF_TMP_DIR/fsx$$
+case $sorttype in
 name)
-	zaf_dbg find "$dir" $depth $type $mask \| sort $so \| $head \| zaf_discovery '{#PATH}'
-	eval find "$dir" $depth $type $mask | sort $so | $head | zaf_discovery '{#PATH}'
+	zaf_dbg find "$directory" $depth $type $mask
+	eval find "$directory" $depth $type $mask >$tmpf
+	[ -s "$tmpf" ] || {  echo -n "NO_OBJECTS_FOUND"; zaf_err "NO_OBJECTS_FOUND"; }
+	zaf_dbg sort -n $so \| $head \| zaf_discovery '{#PATH}'
+	sort -n $so <$tmpf | $head | zaf_discovery '{#PATH}'
 	;;
 du)
-	zaf_dbg find "$dir" $depth $type $mask -print0 \| xargs -0 du \| sort -n $so \| $head \| zaf_discovery '{#PATH}'
-	eval find "$dir" $depth $type $mask -print0 | xargs -0 du | sort -n $so | tr '\t' ' ' | cut -d ' ' -f 2 | $head |zaf_discovery '{#PATH}'
+	zaf_dbg find "$directory" $depth $type $mask -print0
+	eval find "$directory" $depth $type $mask -print0 >$tmpf
+	[ -s "$tmpf" ] || {  echo -n "NO_OBJECTS_FOUND"; zaf_err "NO_OBJECTS_FOUND"; }
+	zaf_dbg  xargs -0 du \| sort -n $so \| $head \| zaf_discovery '{#PATH}'
+	xargs -0 du <$tmpf | sort -n $so | tr '\t' ' ' | cut -d ' ' -f 2 | $head |zaf_discovery '{#PATH}'
 	;;
 esac
+rm -f $tmpf
 ::
 /Item
 
@@ -86,26 +90,22 @@ Description::
  f - file
  l - symbolink link
 ::
-Parameters: asroot discovered_path
+Parameters::
+ path		''		''			# Path
+ who 		zabbix 		'^(root|zabbix)$'	# which permissions to use. Sudo must be installed for root. Default is zabbix
+::
 Type: character
-TestParameters: aszabbix,/tmp/
+Testparameters: /tmp/ /tmp/,root
 Script::
-#!/bin/sh
 
-case $1 in
+case $who in
 asroot|root)
-  shift; exec sudo -E -n $0 "$@";;
-aszabbix|zabbix)
-  shift;;
+  ! zaf_is_root && exec sudo -E -n $0 "$@";;
 esac
-{INCLUDES}
 
-[ -z "$1" ] && zaf_err "Directory must be entered."
-
-[ -f "$1" ] && echo f && exit
-[ -d "$1" ] && echo d && exit
-[ -l "$1" ] && echo l && exit
-
+[ -f "$path" ] && echo f && exit
+[ -d "$path" ] && echo d && exit
+[ -l "$path" ] && echo l && exit
 ::
 /Item:
 
@@ -113,24 +113,21 @@ Item pathinfo_du:
 Description::
  Disk usage of discovered path in bytes 
 ::
-Parameters: asroot discovered_path
+Parameters::
+ path		''		''			# Path
+ who 		zabbix 		'^(root|zabbix)$'	# which permissions to use. Sudo must be installed for root. Default is zabbix
+::
 Type: integer
-TestParameters: aszabbix,/tmp/
+Testparameters: /tmp /tmp/,root
 Cache: 3600
 Script::
-#!/bin/sh
 
-case $1 in
+case $who in
 asroot|root)
-  shift; exec sudo -E -n $0 "$@";;
-aszabbix|zabbix)
-  shift;;
+  ! zaf_is_root && exec sudo -E -n $0 "$@";;
 esac
-{INCLUDES}
 
-[ -z "$1" ] && zaf_err "Directory must be entered."
-
-du -sb "$1"  | (read sum dir; echo $sum)
+du -sb "$path"  | (read sum dir; echo $sum)
 ::
 /Item:
 
@@ -138,24 +135,21 @@ Item pathinfo_items:
 Description::
  Number of items in discovered path  (dirs+files+rest)
 ::
-Parameters: asroot discovered_path
+Parameters::
+ path		''		''			# Path
+ who 		zabbix 		'^(root|zabbix)$'	# which permissions to use. Sudo must be installed for root. Default is zabbix
+::
 Type: integer
-TestParameters: aszabbix,/tmp/
+Testparameters: /tmp /tmp/,root
 Cache: 600
 Script::
-#!/bin/sh
 
-case $1 in
+case $who in
 asroot|root)
-  shift; exec sudo -E -n $0 "$@";;
-aszabbix|zabbix)
-  shift;;
+  ! zaf_is_root && exec sudo -E -n $0 "$@";;
 esac
-{INCLUDES}
 
-[ -z "$1" ] && zaf_err "Directory must be entered."
-
-ls -1 "$1" |wc -l
+ls -1 "$path" |wc -l
 ::
 /Item:
 

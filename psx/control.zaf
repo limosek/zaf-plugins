@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look to processess and their usage.
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/psx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -20,7 +20,24 @@ Item discovery:
 Description::
  Discovery of runing processes
 ::
-Cmd: {PLUGINDIR}/proc-discovery.sh
+Testparameters: ps systemd,root
+Parameters::
+ pregex 	'.*'	''	# regexp to match process name
+ uregex 	'.*'	''	# regexp to match user name
+::
+Script::
+
+if [ "${ZAF_PKG}" = "opkg" ]; then
+	AWK='{ print $2" "$5; }'
+	PS="w"
+else
+	AWK='{ print $11" "$1; }'
+	PS="--no-headers caux"
+fi
+
+ps $PS | awk "$AWK" | sort | uniq | sed -e 's/\//\\\//g' -e '$s/.$//' | grep -E "^$pregex" | grep -E "$uregex\$" | zaf_discovery '{#PSNAME}' '{#PSUSER}'
+
+::
 /Item
 
 

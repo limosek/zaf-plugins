@@ -8,7 +8,7 @@ Description::
 ::
 
 # Version of the plugin.
-Version: 0.4
+Version: 0.5
 
 # Url of plugin location to be able to update plugin
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/zaf
@@ -37,61 +37,79 @@ Item plugins:
 Description::
  Returns installed plugins
 ::
-Cmd:: zaf_list_plugins
+Cmd: zaf_list_plugins
 /Item
 
-Item discovery.plugins:
+Item discovery_plugins:
 Description::
  Returns installed plugins in form suitable for zabbix discovery
 ::
-Cmd:: zaf_discovery_plugins
+Cmd: zaf_discovery_plugins
 /Item
 
 Item plugin_version:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns version of plugin
 ::
-Cmd:: zaf_plugin_version $1
+Cmd: zaf_plugin_version $1
 /Item
 
 Item plugin_url:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns base url of plugin
 ::
-Cmd:: zaf_plugin_url $1
+Cmd: zaf_plugin_url $1
 /Item
 
 Item plugin_web:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns home url of plugin
 ::
-Cmd:: zaf_plugin_web $1
+Cmd: zaf_plugin_web $1
 /Item
 
 Item plugin_maintainer:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns maintainer of plugin
 ::
-Cmd:: zaf_plugin_maintainer $1
+Cmd: zaf_plugin_maintainer $1
 /Item
 
 Item plugin_items:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns items defined in plugin
 ::
-Cmd:: zaf_list_plugin_items $1
+Cmd: zaf_list_plugin_items $1
 /Item
 
 Item plugin_template_url:
-Parameters: plugin_name
+Parameters::
+	plugin_name '' ''
+::
+Testparameters: zaf
 Description::
  Returns base template url for plugin
 ::
-Cmd:: zaf_plugin_template_url $1
+Cmd: zaf_plugin_template_url $1
 /Item
 

@@ -19,7 +19,7 @@ Item discovery_interfaces:
 Description::
  Discovery of tc enabled interfaces
 ::
-Script: {INCLUDES} tc qdisc show | sed 's/.*dev \([\_a-z0-9\-]*\).*/\1/' | sort | uniq | zaf_discovery '{#IFACE}'
+Script: tc qdisc show | sed 's/.*dev \([\_a-z0-9\-]*\).*/\1/' | sort | uniq | zaf_discovery '{#IFACE}'
 /Item
 
 Item discovery_classes:
@@ -27,7 +27,6 @@ Description::
  Discovery of tc classes
 ::
 Script::
-{INCLUDES}
 ifs=$(tc qdisc show | sed 's/.*dev \([\_a-z0-9\-]*\).*/\1/' | sort | uniq)
 for i in $ifs; do
   tc class ls dev $i |cut -d ' ' -f 2,3,5 | while read type id parent; do
@@ -38,59 +37,79 @@ done
 /Item
 
 Item discovery_qdiscs:
-Parameters: interface
+Parameters::
+ interface	''	''
+::
 Description::
  Discovery of tc qdiscs
 ::
-Script: {INCLUDES} tc qdisc show |cut -d ' ' -f 2,3,5,7 | zaf_discovery '{#TYPE}' '{#ID}' '{#IFACE}' '{#PARENT}'
+Cmd: tc qdisc show |cut -d ' ' -f 2,3,5,7 | zaf_discovery '{#TYPE}' '{#ID}' '{#IFACE}' '{#PARENT}'
 /Item
 
 Item qdisc_limit:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show limit of given qdisc handle 
 ::
-Script: {INCLUDES} tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $7 }' | tr -d 'p'
+Cmd: tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $7 }' | tr -d 'p'
 /Item
 
 Item qdisc_flows:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show flows of given qdisc handle 
 ::
-Script: {INCLUDES} tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $9 }' | tr -d 'p'
+Cmd: tc -s qdisc show dev $1 | awk '/qdisc(.*)'$1':/ { print $9 }' | tr -d 'p'
 /Item
 
 Item class_sentbytes:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show bytes sent to this class
 ::
-Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $2 }'
+Cmd: tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $2 }'
 /Item
 
 Item class_sentpackets:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show packets sent to this class
 ::
-Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $4 }'
+Cmd: tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $4 }'
 /Item
 
 Item class_dropped:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show dropped packets in this class
 ::
-Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $7 }' | tr -d ','
+Cmd: tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $7 }' | tr -d ','
 /Item
 
 Item class_overlimit:
-Parameters: interface id
+Parameters:
+	interface	''	''	# Interface
+	id		''	''	# Id
+::
 Description::
  Show overlimit packets in this class
 ::
-Script: {INCLUDES} tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $9 }' | tr -d ','
+Cmd: tc -s class show dev $1 | awk '/class(.*)'$2'/ { getline; print $9 }' | tr -d ','
 /Item
 
 
