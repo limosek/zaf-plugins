@@ -9,7 +9,7 @@ Description::
 ::
 
 # Version of the plugin.
-Version: 0.3
+Version: 0.4
 
 # Url of plugin location to be able to update plugin
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fail2ban
@@ -52,6 +52,7 @@ Item jail_discovery:
 Description::
      Returns discovered jails
 ::
+Testparameters: yes
 Script: sudo fail2ban-client status | grep "Jail list" |grep -E -o "([-[:alnum:]]*, )*[-[:alnum:]]*$" | zaf_discovery '{#F2BJAIL}'
 /Item
 
