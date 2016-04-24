@@ -4,7 +4,7 @@ Description::
  Plugin which will make deeper look into directory structure using discovery
 ::
 
-Version: 0.7
+Version: 0.8
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/fsx
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -83,7 +83,7 @@ rm -f $tmpf
 ::
 /Item
 
-Item pathinfo_type:
+Item type:
 Description::
  Type of discovered path (d,f,l) 
  d - directory
@@ -109,7 +109,7 @@ esac
 ::
 /Item:
 
-Item pathinfo_du:
+Item du:
 Description::
  Disk usage of discovered path in bytes 
 ::
@@ -131,7 +131,7 @@ du -sb "$path"  | (read sum dir; echo $sum)
 ::
 /Item:
 
-Item pathinfo_items:
+Item items:
 Description::
  Number of items in discovered path  (dirs+files+rest)
 ::

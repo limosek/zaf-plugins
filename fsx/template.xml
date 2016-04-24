@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-04-09T10:03:07Z</date>
+    <date>2016-04-24T03:21:23Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -31,11 +31,149 @@
             <items/>
             <discovery_rules>
                 <discovery_rule>
+                    <name>ZAF fsx discovery of certificates in {$FSX_CERT_DIR}</name>
+                    <type>7</type>
+                    <snmp_community/>
+                    <snmp_oid/>
+                    <key>fsx.discovery[{$FSX_CERT_DIR},%.pem,1,f,name/+,100,{$FSX_USER}]</key>
+                    <delay>300</delay>
+                    <status>0</status>
+                    <allowed_hosts/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <filter>
+                        <evaltype>0</evaltype>
+                        <formula/>
+                        <conditions/>
+                    </filter>
+                    <lifetime>30</lifetime>
+                    <description>Discover certificates {$FSX_CERT_DIR}</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Certificate path type (should be 'd' anytime)</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>fsx.type[{#PATH},{$FSX_USER}]</key>
+                            <delay>600</delay>
+                            <history>90</history>
+                            <trends>0</trends>
+                            <status>0</status>
+                            <value_type>1</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Filesystems</name>
+                                </application>
+                                <application>
+                                    <name>fsx</name>
+                                </application>
+                                <application>
+                                    <name>ZAF</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Certificate hash</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>vfs.file.md5sum[{#PATH}]</key>
+                            <delay>600</delay>
+                            <history>90</history>
+                            <trends>0</trends>
+                            <status>0</status>
+                            <value_type>1</value_type>
+                            <allowed_hosts/>
+                            <units/>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Filesystems</name>
+                                </application>
+                                <application>
+                                    <name>fsx</name>
+                                </application>
+                                <application>
+                                    <name>ZAF</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes/>
+                    <graph_prototypes/>
+                    <host_prototypes/>
+                </discovery_rule>
+                <discovery_rule>
                     <name>ZAF fsx discovery of biggest directories in {$FSX_DIR}</name>
                     <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>fsx.discovery[{$FSX_USER},{$FSX_DIR},%,100,d,du/-,100]</key>
+                    <key>fsx.discovery[{$FSX_DIR},%,100,d,du/-,100,{$FSX_USER}]</key>
                     <delay>300</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -69,7 +207,7 @@
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>fsx.pathinfo_du[{$FSX_USER},{#PATH}]</key>
+                            <key>fsx.du[{#PATH},{$FSX_USER}]</key>
                             <delay>600</delay>
                             <history>90</history>
                             <trends>365</trends>
@@ -119,7 +257,7 @@
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>fsx.pathinfo_items[{$FSX_USER},{#PATH}]</key>
+                            <key>fsx.items[{#PATH},{$FSX_USER}]</key>
                             <delay>600</delay>
                             <history>90</history>
                             <trends>365</trends>
@@ -170,15 +308,19 @@
                 </discovery_rule>
             </discovery_rules>
             <macros>
- 		<macro>
+                <macro>
                     <macro>{$FSX_USER}</macro>
                     <value>zabbix</value>
                 </macro>
-		    <macro>
+                <macro>
                     <macro>{$FSX_DIR}</macro>
                     <value>/var/</value>
                 </macro>
-	    </macros>
+                <macro>
+                    <macro>{$FSX_CERT_DIR}</macro>
+                    <value>/etc/ssl</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
