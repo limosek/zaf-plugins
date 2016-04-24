@@ -35,7 +35,7 @@
                     <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>fsx.discovery[{$FSX_CERT_DIR},%.pem,1,f,name/+,100,{$FSX_USER}]</key>
+                    <key>fsx.discovery[{$FSX_CERT_DIR},%.pem,f,3,name/+,100,{$FSX_USER}]</key>
                     <delay>300</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -173,7 +173,7 @@
                     <type>7</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>fsx.discovery[{$FSX_DIR},%,100,d,du/-,100,{$FSX_USER}]</key>
+                    <key>fsx.discovery[{$FSX_DIR},%,d,100,du/-,100,{$FSX_USER}]</key>
                     <delay>300</delay>
                     <status>0</status>
                     <allowed_hosts/>
