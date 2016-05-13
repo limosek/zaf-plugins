@@ -1,0 +1,141 @@
+Plugin: iwx
+
+Description::
+ Plugin for wifi mac80211 informations and discovery
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/iwx
+Web: https://github.com/limosek/zaf-plugins
+
+# Dependencies
+Depends-dpkg: dash curl
+Depens-opkg: busybox curl
+Depends-rpm: curl
+Depends-bin: curl ps iw
+
+Sudo: iw
+
+# Install
+Install-bin: functions.sh
+
+Item if_discovery:
+Description::
+ Discovery of wireless interfaces
+::
+Cmd: wifi_if_discovery
+/Item
+
+Item phy_discovery:
+Description::
+ Discovery of wireless physical interfaces
+::
+Cmd: wifi_phy_discovery
+/Item
+
+Item channels_discovery:
+Description::
+ Discovery of wireless channels
+::
+Parameters: dev
+Cmd: wifi_channels_discovery $1
+/Item
+
+Item clients_discovery:
+Description::
+ Discovery of wireless clients
+::
+Parameters: dev
+Cmd: wifi_clients_discovery $1
+/Item
+
+Item client_signal:
+Description::
+ Signal level of client
+::
+Parameters: dev mac
+Cmd: wifi_clients_discovery $1 $2
+/Item
+
+Item client_rxrate:
+Description::
+ RX rate of client
+::
+Parameters: dev mac
+Cmd: wifi_clients_rxrate $1 $2
+/Item
+
+Item client_txrate:
+Description::
+ TX rate of client
+::
+Parameters: dev mac
+Cmd: wifi_clients_txrate $1 $2
+/Item
+
+Item neigh_ssid:
+Description::
+ SSID of neighbour
+::
+Parameters: dev mac
+Cmd: wifi_neigh_ssid $1 $2
+/Item
+
+Item neigh_signal:
+Description::
+ Signal level of neighbour
+::
+Parameters: dev mac
+Cmd: wifi_neigh_signal $1 $2
+/Item
+
+Item neigh_channel:
+Description::
+ Channel of neighbour
+::
+Parameters: dev mac
+Cmd: wifi_neigh_channel $1 $2
+/Item
+
+Item channel_noise:
+Description::
+ Noise level on channel
+::
+Parameters: dev channel
+Cmd: wifi_channel_noise $1 $2
+/Item
+
+Item channel_activetime:
+Description::
+ Time spend as active on channel
+::
+Parameters: dev channel
+Cmd: wifi_channel_activetime $1 $2
+/Item
+
+Item channel_busytime:
+Description::
+ Time spend as busy on channel
+::
+Parameters: dev channel
+Cmd: wifi_channel_busytime $1 $2
+/Item
+
+Item channel_txtime:
+Description::
+ Time spend as TX on channel
+::
+Parameters: dev channel
+Cmd: wifi_channel_transmittime $1 $2
+/Item
+
+Item channel_rxtime:
+Description::
+ Time spend as RX on channel
+::
+Parameters: dev channel
+Cmd: wifi_channel_receivetime $1 $2
+/Item
+
+
+
