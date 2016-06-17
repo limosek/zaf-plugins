@@ -1,0 +1,46 @@
+
+Plugin: sslcheck
+Description::
+ Plugin which will check SSL certificate on hosts. It uses external scripts of zabbix server.
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/sslcheck
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash curl openssl
+Depens-opkg: busybox curl openssl
+Depends-rpm: curl openssl
+Depends-bin: curl openssl
+
+ExtItem daysleft:
+Description::
+ Returns days left to expire certificate
+::
+Testparameters: ps systemd,root
+Parameters::
+ server 	''	''	# Host to check
+ port 		'443'	''	# Port to check
+ timeout	25	''	# Timeout in secs
+::
+Type: integer
+Script::
+end_date="$(/usr/bin/timeout $timeout /usr/bin/openssl s_client -host $server -port $port -showcerts < /dev/null 2>/dev/null | sed -n '/BEGIN CERTIFICATE/,/END CERT/p' | openssl x509 -enddate -noout 2>/dev/null | sed -e 's/^.*\=//')"
+
+if [ -n "$end_date" ]; then
+	end_date_seconds=$(date "+%s" --date "$end_date")
+	now_seconds=$(date "+%s")
+	CALC=$((($end_date_seconds-$now_seconds)/24/3600))
+	echo $CALC
+else
+	exit 124
+fi 
+
+::
+
+/ExtItem
+
+
+
