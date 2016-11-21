@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>3.0</version>
-    <date>2016-05-13T15:42:32Z</date>
+    <version>3.2</version>
+    <date>2016-11-21T16:43:49Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -21,7 +21,7 @@
                 <application>
                     <name>Wifi</name>
                 </application>
-		<application>
+                <application>
                     <name>ZAF</name>
                 </application>
             </applications>
@@ -284,13 +284,19 @@
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template Zaf iwx:iwx.channel_activetime[{#DEV},{#FREQ}].change()}&gt;20 and ({Template Zaf iwx:iwx.channel_busytime[{#DEV},{#FREQ}].last()}/{Template Zaf iwx:iwx.channel_activetime[{#DEV},{#FREQ}].last()})&gt;0.3</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
                             <name>Busy time on channel {#FREQ} on {#DEV} is high</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>2</priority>
                             <description/>
                             <type>0</type>
+                            <manual_close>0</manual_close>
                             <dependencies/>
+                            <tags/>
                         </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes>
@@ -612,7 +618,6 @@
                     </graph_prototypes>
                     <host_prototypes/>
                 </discovery_rule>
-              
                 <discovery_rule>
                     <name>Wifi neighbours discovery</name>
                     <type>7</type>
@@ -784,6 +789,7 @@
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
+            <httptests/>
             <macros/>
             <templates/>
             <screens/>

@@ -1,26 +1,33 @@
 
+
 wifi_ifphylist_openwrt() {
 	local devs phys p ifname ifindex i
 
-	json_load "$(ubus -S call network.wireless status)"
-	json_get_keys phys
-	for p in $phys; do
-	  if [ "$1" = "phy" ]; then
-	    echo $p
-	    continue
-	  fi
-	  json_select "$p"
-	  json_select "interfaces"
-	  json_get_keys ifindex
-	  for i in $ifindex; do
-	    json_select $i
-	    json_get_var ifname ifname
-	    echo $ifname
-	    json_select ..
-	  done
-	  json_select ..
-	  json_select ..
-	done
+	if [ -f /usr/share/libubox/jshn.sh ]; then
+		. /usr/share/libubox/jshn.sh
+
+		json_load "$(ubus -S call network.wireless status)"
+		json_get_keys phys
+		for p in $phys; do
+	  		if [ "$1" = "phy" ]; then
+	    			echo $p
+	    			continue
+	  		fi
+	  		json_select "$p"
+	  		json_select "interfaces"
+	  		json_get_keys ifindex
+	  		for i in $ifindex; do
+	    			json_select $i
+	    			json_get_var ifname ifname
+	    			echo $ifname
+	    			json_select ..
+	  		done
+	  		json_select ..
+	  		json_select ..
+		done
+	else
+		wifi_ifphylist "$1"
+	fi
 }
 
 wifi_ifphylist() {
