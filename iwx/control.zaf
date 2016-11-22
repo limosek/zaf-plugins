@@ -4,7 +4,7 @@ Description::
  Plugin for wifi mac80211 informations and discovery
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/iwx
 Web: https://github.com/limosek/zaf-plugins
 
@@ -37,7 +37,9 @@ Item channels_discovery:
 Description::
  Discovery of wireless channels
 ::
+Cache: 600
 Parameters: dev
+Testparameters: wlan0
 Cmd: wifi_channels_discovery $1
 /Item
 
@@ -45,7 +47,9 @@ Item clients_discovery:
 Description::
  Discovery of wireless clients
 ::
+Cache: 300
 Parameters: dev
+Testparameters: wlan0
 Cmd: wifi_clients_discovery $1
 /Item
 
@@ -53,7 +57,9 @@ Item neigh_discovery:
 Description::
  Discovery of wireless neighbours
 ::
+Cache: 600
 Parameters: dev
+Testparameters: wlan0
 Cmd: wifi_neigh_discovery $1
 /Item
 
