@@ -10,7 +10,7 @@ Web: https://github.com/limosek/zaf-plugins
 
 # Dependencies
 Depends-dpkg: dash curl
-Depens-opkg: busybox curl jshn
+Depends-opkg: busybox curl jshn
 Depends-rpm: curl
 Depends-bin: curl ps iw
 

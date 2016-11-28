@@ -10,7 +10,7 @@ Web: https://github.com/Grifagor/zabbix-openvpn
 
 # Dependencies
 Depends-dpkg: dash curl
-Depens-opkg: busybox curl
+Depends-opkg: busybox curl
 Depends-rpm: curl
 Depends-bin: curl ps
 

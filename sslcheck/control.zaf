@@ -11,7 +11,7 @@ Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
 Depends-dpkg: dash curl openssl
-Depens-opkg: busybox curl openssl
+Depends-opkg: busybox curl openssl
 Depends-rpm: curl openssl
 Depends-bin: curl openssl
 

@@ -11,7 +11,7 @@ Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
 Depends-dpkg: dash
-Depens-opkg: busybox
+Depends-opkg: busybox
 Depends-rpm: grep
 Depends-bin: grep tr sort uniq
 

@@ -11,7 +11,7 @@ Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
 Depends-dpkg: dash curl
-Depens-opkg: busybox curl
+Depends-opkg: busybox curl
 Depends-rpm: curl
 Depends-bin: curl find
 
