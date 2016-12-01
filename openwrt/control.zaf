@@ -1,0 +1,77 @@
+
+Plugin: openwrt
+Description::
+ Plugin for monitoring OpenWrt devices
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/openwrt
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-opkg: busybox
+
+Item ipackages:
+Description::
+ List of installed packages
+::
+Cmd: opkg list-installed | cut -d " " -f 1 | tr "\n" " "
+/Item
+
+Item ipackages_discovery:
+Description::
+ Discovery of installed packages
+::
+Cmd: opkg list-installed | cut -d " " -f 1 | zaf_discovery '{#PKG}'
+/Item
+
+Item apackages:
+Description::
+ List of available packages
+::
+Cmd: opkg list | cut -d " " -f 1 | tr "\n" " "
+/Item
+
+Item apackages_discovery:
+Description::
+ Discovery of available packages
+::
+Cmd: opkg list | cut -d " " -f 1 | zaf_discovery '{#PKG}'
+/Item
+
+Item version:
+Description::
+ Get version of openwrt
+::
+Cmd: . /etc/openwrt_release && echo $DISTRIB_CODENAME
+/Item
+
+Item log:
+Testparameters: agent
+Parameters::
+ regex         '.*'    ''      # regexp to match line
+::
+Description::
+ Get line from openwrt in-memory log buffer
+::
+Cmd: logread | grep "$regex" | tail -1
+/Item
+
+Item if_discovery:
+Description::
+ Discovery network interfaces
+::
+Script::
+. /usr/share/libubox/jshn.sh
+json_load "$(ubus call network.device status)"
+json_get_keys interfaces
+for i in $interfaces; do
+  echo $i
+done | zaf_discovery '{#IF}'
+::
+/Item
+
+
+
+
