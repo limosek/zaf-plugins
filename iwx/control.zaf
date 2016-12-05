@@ -9,10 +9,9 @@ Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/iwx
 Web: https://github.com/limosek/zaf-plugins
 
 # Dependencies
-Depends-dpkg: dash curl
-Depends-opkg: busybox curl jshn
-Depends-rpm: curl
-Depends-bin: curl ps iw
+Depends-dpkg: dash
+Depends-opkg: busybox jshn
+Depends-bin: ps iw
 
 Sudo: iw
 

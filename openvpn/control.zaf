@@ -9,10 +9,9 @@ Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/psx
 Web: https://github.com/Grifagor/zabbix-openvpn
 
 # Dependencies
-Depends-dpkg: dash curl
-Depends-opkg: busybox curl
-Depends-rpm: curl
-Depends-bin: curl ps
+Depends-dpkg: dash openvpn
+Depends-opkg: busybox openvpn
+Depends-bin: openvpn
 
 Item discovery_users:
 Parameters: ccd_dir

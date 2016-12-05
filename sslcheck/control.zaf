@@ -10,10 +10,10 @@ Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
-Depends-dpkg: dash curl openssl
-Depends-opkg: busybox curl openssl
-Depends-rpm: curl openssl
-Depends-bin: curl openssl
+Depends-dpkg: dash openssl
+Depends-opkg: busybox openssl
+Depends-rpm: openssl
+Depends-bin: openssl
 
 ExtItem daysleft:
 Description::

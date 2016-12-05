@@ -10,10 +10,9 @@ Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
-Depends-dpkg: dash curl
-Depends-opkg: busybox curl
-Depends-rpm: curl
-Depends-bin: curl ps
+Depends-dpkg: dash
+Depends-opkg: busybox
+Depends-bin: ps
 
 Item discovery:
 Description::

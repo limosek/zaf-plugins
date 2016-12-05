@@ -10,10 +10,9 @@ Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
-Depends-dpkg: dash curl
-Depends-opkg: busybox curl
-Depends-rpm: curl
-Depends-bin: curl find
+Depends-dpkg: dash
+Depends-opkg: busybox
+Depends-bin: find
 
 # Sudo needed. It will be preconfigured if sudo is installed
 Sudo: find %, {PLUGINDIR}/%sh %

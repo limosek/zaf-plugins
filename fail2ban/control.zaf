@@ -21,10 +21,10 @@ Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
 
 # Dependencies
-Depends-dpkg: dash curl fail2ban sudo
-Depends-opkg: busybox curl fail2ban sudo
-Depends-rpm: curl fail2ban sudo
-Depends-bin: curl fail2ban-client sudo
+Depends-dpkg: dash fail2ban sudo
+Depends-opkg: busybox fail2ban sudo
+Depends-rpm: fail2ban sudo
+Depends-bin: fail2ban-client sudo
 
 Sudo: fail2ban-client %
 
