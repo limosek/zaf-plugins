@@ -4,7 +4,7 @@ Description::
  Plugin for wifi mac80211 informations and discovery
 ::
 
-Version: 0.3
+Version: 0.4
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/iwx
 Web: https://github.com/limosek/zaf-plugins
 
