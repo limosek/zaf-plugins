@@ -2,9 +2,9 @@
 
 wifi_ifphylist() {
 	if [ "$1" = "phy" ]; then
-		iw dev | grep Interface | cut -d ' ' -f 2
-	else
 		iw phy | grep Wiphy | cut -d ' ' -f 2
+	else
+		iw dev | grep Interface | cut -d ' ' -f 2
 	fi
 }
 
@@ -43,7 +43,7 @@ wifi_if_discovery(){
 }																																																							
 																																				 
 wifi_phy_discovery(){																																												
-	 wifi_phylist | grep '^[a-z].*' | zaf_discovery "{#DEV}"																								 
+	 wifi_phylist | grep '^[a-z].*' | zaf_discovery "{#DEV}"
 }
 
 wifi_channels_discovery(){
