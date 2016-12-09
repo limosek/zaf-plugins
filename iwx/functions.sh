@@ -2,9 +2,9 @@
 
 wifi_ifphylist() {
 	if [ "$1" = "phy" ]; then
-		iw dev | grep Interface | cut -d ' ' -f 2
-	else
 		iw phy | grep Wiphy | cut -d ' ' -f 2
+	else
+		iw dev | grep Interface | cut -d ' ' -f 2
 	fi
 }
 
