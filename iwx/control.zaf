@@ -67,7 +67,7 @@ Description::
  Signal level of client
 ::
 Parameters: dev mac
-Cmd: wifi_clients_discovery $1 $2
+Cmd: wifi_client_discovery $1 $2
 /Item
 
 Item client_rxrate:
@@ -75,7 +75,7 @@ Description::
  RX rate of client
 ::
 Parameters: dev mac
-Cmd: wifi_clients_rxrate $1 $2
+Cmd: wifi_client_rxrate $1 $2
 /Item
 
 Item client_txrate:
@@ -83,7 +83,7 @@ Description::
  TX rate of client
 ::
 Parameters: dev mac
-Cmd: wifi_clients_txrate $1 $2
+Cmd: wifi_client_txrate $1 $2
 /Item
 
 Item neigh_ssid:
