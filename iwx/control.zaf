@@ -4,7 +4,7 @@ Description::
  Plugin for wifi mac80211 informations and discovery
 ::
 
-Version: 0.4
+Version: 0.5
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/iwx
 Web: https://github.com/limosek/zaf-plugins
 
@@ -16,9 +16,10 @@ Depends-bin: ps iw
 Sudo: iw
 
 # Install
-Install-bin: functions.sh
+Install-files: functions.sh
 
 Item if_discovery:
+Return: json
 Description::
  Discovery of wireless interfaces
 ::
@@ -26,6 +27,7 @@ Cmd: wifi_if_discovery
 /Item
 
 Item phy_discovery:
+Return: json
 Description::
  Discovery of wireless physical interfaces
 ::
@@ -33,57 +35,85 @@ Cmd: wifi_phy_discovery
 /Item
 
 Item channels_discovery:
+Return: json
 Description::
  Discovery of wireless channels
 ::
 Cache: 600
 Parameters: dev
 Testparameters: wlan0
-Cmd: wifi_channels_discovery $1
+Parameters::
+	dev	wlan0 ''
+::
+Cmd: wifi_channels_discovery $dev
 /Item
 
 Item clients_discovery:
+Return: json
 Description::
  Discovery of wireless clients
 ::
 Cache: 300
-Parameters: dev
+Parameters::
+	dev	wlan0 ''
+::
 Testparameters: wlan0
-Cmd: wifi_clients_discovery $1
+Cmd: wifi_clients_discovery $dev
 /Item
 
 Item neigh_discovery:
+Return: json
 Description::
  Discovery of wireless neighbours
 ::
 Cache: 600
-Parameters: dev
+Parameters::
+	dev	wlan0 ''
+::
 Testparameters: wlan0
-Cmd: wifi_neigh_discovery $1
+Cmd: wifi_neigh_discovery $dev
 /Item
 
 Item client_signal:
+Return: int
+Return-null: -200
+Return-error: -199
 Description::
  Signal level of client
 ::
-Parameters: dev mac
-Cmd: wifi_clients_discovery $1 $2
+Parameters::
+	dev	wlan0 ''
+	mac 	'' ''
+::
+Cmd:  wifi_client_signal $dev $mac
 /Item
 
 Item client_rxrate:
+Return: int
+Return-null: 0
+Return-error: 0
 Description::
  RX rate of client
 ::
-Parameters: dev mac
-Cmd: wifi_clients_rxrate $1 $2
+Parameters::
+	dev	wlan0 ''
+	mac 	'' ''
+::
+Cmd: wifi_client_rxrate $dev $mac
 /Item
 
 Item client_txrate:
+Return: int
+Return-null: 0
+Return-error: 0
 Description::
  TX rate of client
 ::
-Parameters: dev mac
-Cmd: wifi_clients_txrate $1 $2
+Parameters::
+	dev	wlan0 ''
+	mac 	'' ''
+::
+Cmd: wifi_client_txrate $dev $mac
 /Item
 
 Item neigh_ssid:
@@ -91,64 +121,101 @@ Description::
  SSID of neighbour
 ::
 Parameters: dev mac
-Cmd: wifi_neigh_ssid $1 $2
+Cmd: wifi_neigh_ssid $dev $mac
 /Item
 
 Item neigh_signal:
+Return: int
+Return-null: -200
+Return-error: -199
 Description::
  Signal level of neighbour
 ::
-Parameters: dev mac
-Cmd: wifi_neigh_signal $1 $2
+Parameters::
+	dev	wlan0 ''
+	mac 	'' ''
+::
+Cmd: wifi_neigh_signal $dev $mac
 /Item
 
 Item neigh_channel:
+Return: int
+Return-null: -1
+Return-error: -2
 Description::
  Channel of neighbour
 ::
 Parameters: dev mac
-Cmd: wifi_neigh_channel $1 $2
+Cmd: wifi_neigh_channel $dev $mac
 /Item
 
 Item channel_noise:
+Return: int
+Return-null: -200
+Return-error: -199
 Description::
  Noise level on channel
 ::
-Parameters: dev channel
-Cmd: wifi_channel_noise $1 $2
+Parameters::
+	dev	wlan0 ''
+	channel '' ''
+::
+Cmd: wifi_channel_noise $dev $channel
 /Item
 
 Item channel_activetime:
+Return: int
+Return-null: 0
+Return-error: -1
 Description::
  Time spend as active on channel
 ::
-Parameters: dev channel
-Cmd: wifi_channel_activetime $1 $2
+Parameters::
+	dev	wlan0 ''
+	channel '' ''
+::
+Cmd: wifi_channel_activetime $dev $channel
 /Item
 
 Item channel_busytime:
+Return: int
+Return-null: 0
+Return-error: -1
 Description::
  Time spend as busy on channel
 ::
-Parameters: dev channel
-Cmd: wifi_channel_busytime $1 $2
+Parameters::
+	dev	wlan0 ''
+	channel '' ''
+::
+Cmd: wifi_channel_busytime $dev $channel
 /Item
 
 Item channel_txtime:
+Return: int
+Return-null: 0
+Return-error: -1
 Description::
  Time spend as TX on channel
 ::
-Parameters: dev channel
+Parameters::
+	dev	wlan0 ''
+	channel '' ''
+::
 Cmd: wifi_channel_transmittime $1 $2
 /Item
 
 Item channel_rxtime:
+Return: int
+Return-null: 0
+Return-error: -1
 Description::
  Time spend as RX on channel
 ::
-Parameters: dev channel
-Cmd: wifi_channel_receivetime $1 $2
+Parameters::
+	dev	wlan0 ''
+	channel '' ''
+::
+Cmd: wifi_channel_receivetime $dev $channel
 /Item
-
-
 
