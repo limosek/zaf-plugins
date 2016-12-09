@@ -67,7 +67,7 @@ Description::
  Signal level of client
 ::
 Parameters: dev mac
-Cmd: wifi_client_discovery $1 $2
+Cmd: wifi_client_signal $1 $2
 /Item
 
 Item client_rxrate:
