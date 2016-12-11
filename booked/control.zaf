@@ -4,7 +4,7 @@ Description::
  Plugin for booked PHP reservation system
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/booked
 Web: https://github.com/limosek/zaf-plugins
 
@@ -29,10 +29,11 @@ Return: int
 Parameters::
 	from 'now' ''
 	to '+1 hour' ''
+	start_only 'no' ''
 ::
 Description::
- Get number of reservations in given time range
+ Get number of reservations in given time range. If start_only is not null, report even reservations which ends after to.
 ::
-Cmd: php getr.php "$from" "$to"
+Cmd: php getr.php "$from" "$to" "$start_only"
 /Item
 
