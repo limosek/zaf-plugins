@@ -1,0 +1,38 @@
+Plugin: booked
+
+Description::
+ Plugin for booked PHP reservation system
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/booked
+Web: https://github.com/limosek/zaf-plugins
+
+Parameters::
+	url		http://localhost/booked/Services/index.php
+	timezone	UTC
+	username	zaf
+	password	
+::
+
+# Dependencies
+Depends-dpkg: php5-cli
+Depends-opkg: php
+Depends-bin: php
+
+# Install
+Install-files: bookedapi.php bookedapiconfig.php
+Install-bin: getr.php
+
+Item num_reservations:
+Return: int
+Parameters::
+	from 'now' ''
+	to '+1 hour' ''
+::
+Description::
+ Get number of reservations in given time range
+::
+Cmd: getr.php "$from" "$to"
+/Item
+
