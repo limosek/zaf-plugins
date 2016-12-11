@@ -33,6 +33,6 @@ Parameters::
 Description::
  Get number of reservations in given time range
 ::
-Cmd: getr.php "$from" "$to"
+Cmd: php getr.php "$from" "$to"
 /Item
 

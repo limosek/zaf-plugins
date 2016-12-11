@@ -1,6 +1,4 @@
-#!/usr/bin/env php
 <?php
-
 	error_reporting(0);
 	session_start();
 	$from=$argv[1];
@@ -8,16 +6,17 @@
 
 	define("YOURTIMEZONE",getenv("timezone"));
 	define("BOOKEDWEBSERVICESURL",getenv("url"));
+
 	require_once(__DIR__ . "/bookedapi.php");
 
 	if ($from) {
-		$from=New DateTime($from);
+		$from=New DateTime(strtr($from,"_"," "));
 		$from=$from->getTimestamp();
 	} else {
 		$from=time();
 	}
 	if ($to) {
-		$to=New DateTime($to);
+		$to=New DateTime(strtr($to,"_"," "));
 		$to=$to->getTimestamp();
 	} else {
 		$to=time()+3600;
@@ -41,6 +40,5 @@
 	}
 
 	echo $cnt;
-
 
 
