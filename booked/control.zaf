@@ -4,7 +4,7 @@ Description::
  Plugin for booked PHP reservation system
 ::
 
-Version: 0.2
+Version: 0.3
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/booked
 Web: https://github.com/limosek/zaf-plugins
 
@@ -22,7 +22,7 @@ Depends-bin: php
 
 # Install
 Install-files: bookedapi.php bookedapiconfig.php
-Install-bin: getr.php
+Install-bin: getr.php isfirst.php
 
 Item num_reservations:
 Return: int
