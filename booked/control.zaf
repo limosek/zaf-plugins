@@ -37,3 +37,17 @@ Description::
 Cmd: php getr.php "$from" "$to" "$start_only"
 /Item
 
+Item is_first:
+Return: int
+Parameters::
+	time 'now' ''
+	range1 'day' ''
+	range2 'no' ''
+::
+Description::
+ Returns 1 if registration in time is first at given interval. Range can be day, hour or two dates (from range1 to range2)
+::
+Cmd: php isfirst.php "$time" "$range1" "$range2"
+/Item
+
+
