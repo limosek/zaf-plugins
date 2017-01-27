@@ -1,0 +1,49 @@
+
+Plugin: csv
+
+Description::
+ CSV file reader and parser for Zabbix
+ It supports reading CSV and getting its data as Zabbix items
+ Even more it supports discovery based on CSV
+::
+
+Version: 0.1
+
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/csv
+Web: https://github.com/limosek/zaf-plugins/
+
+# Maintainer
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash php-cli
+Depends-opkg: busybox php
+
+Install-bin: get_fields.php get_rows.php
+Install-files: functions.inc.php
+
+Item discovery.fields:
+Parameters::
+	csv '' ''
+	columns '1-100' ''
+	delimiter ',' ''
+::
+Description::
+     Returns json field names from csv (header line)
+::
+Cmd:: get_fields.php 
+/Item
+
+Item discovery.rows:
+Parameters::
+	csv '' ''
+	columns '1-100' ''
+	header 1 ''
+	delimiter ',' ''
+::
+Description::
+     Returns rows from CSV as autodiscovery json.
+::
+Cmd:: get_rows.php 
+/Item
+
