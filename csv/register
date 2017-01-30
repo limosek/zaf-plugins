@@ -1,0 +1,38 @@
+#!/usr/bin/php
+<?php
+
+require_once(__DIR__."/functions.inc.php");
+
+if ($argc<4) {
+	fprintf(STDERR,"Missing arguments!\n");
+	fprintf(STDERR,"register file.csv delim host metadata\n");
+	fprintf(STDERR,"host and metadata are strings where:\n");
+	fprintf(STDERR,"{COLUMN:x} is replaced by value of column x\n");
+	fprintf(STDERR,"{column:x} is replaced by lowercased value of column x\n");
+	fprintf(STDERR,"x can be column index (x starts with zero) or header name.\n");
+	fprintf(STDERR,"CSV must include header line.\n\n");
+	exit(1);
+}
+
+$csv=$argv[1];
+if ($csv=="-") {
+	$csv="php://stdin";
+}
+$delim=$argv[2];
+$host=$argv[3];
+$metadata=$argv[4];
+
+$c=fopen($csv,"r");
+
+$header=fgetcsv($c,false,$delim);
+
+while ($row=fgetcsv($c,false,$delim)) {	
+	$p=get_replacements($header,$row);
+	$hostr=preg_replace($p["patterns"],$p["replacements"],$host);
+	$metadatar=preg_replace($p["patterns"],$p["replacements"],$metadata);
+	fprintf(STDERR,getenv("ZAF_BIN")." register $hostr $metadatar\n");
+	system(getenv("ZAF_BIN")." register $hostr $metadatar\n");
+}
+
+fclose($c);
+

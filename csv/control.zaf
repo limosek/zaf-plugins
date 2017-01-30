@@ -21,6 +21,7 @@ Depends-opkg: busybox php
 
 Install-bin: get_fields.php get_rows.php
 Install-files: functions.inc.php
+Install-cmd: register send
 
 Item discovery.fields:
 Parameters::
@@ -38,6 +39,7 @@ Item discovery.rows:
 Parameters::
 	csv '' ''
 	columns '1-100' ''
+	rows '1-1000' ''
 	header 1 ''
 	delimiter ',' ''
 ::

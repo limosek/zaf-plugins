@@ -5,6 +5,8 @@ require_once(__DIR__."/functions.inc.php");
 
 $csv=getenv("csv");
 $range=parse_colnum(getenv("columns"));
+$rows=parse_colnum(getenv("rows"));
+$rowsf=array_flip($rows);
 $rangef=array_flip($range);
 $head=getenv("header");
 $delim=getenv("delimiter");
@@ -25,16 +27,19 @@ if ($head) {
 json_init();
 $line=0;
 $last=end($range);
+$lastrow=max($rows);
 
 while ($row=fgetcsv($c,false,$delim)) {
 	$line++;
+	if (!array_key_exists($line,$rowsf)) continue;
 	json_row();
 	json_column("ROW","$line");
 	foreach ($range as $num) {
-		json_column("FIELD$num",$header[$num]);
-		json_column("VALUE$num",$row[$num],$last==$num);
+		$col=$num-1;
+		json_column("COLUMN$col",$header[$col]);
+		json_column("VALUE$col",addslashes($row[$col]),$last==$num);
 	}
-	json_row_end(feof($c));
+	json_row_end(feof($c)||$line==$lastrow);
 }
 json_end();
 

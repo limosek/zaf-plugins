@@ -1,0 +1,68 @@
+#!/usr/bin/php
+<?php
+
+require_once(__DIR__."/functions.inc.php");
+
+if ($argc<5) {
+	fprintf(STDERR,"Missing arguments!\n");
+	fprintf(STDERR,"send file.csv delim mode item1=field1 [item2=field2] ...\n");
+	fprintf(STDERR,"mode is stdout or send,\n");
+	fprintf(STDERR,"itemx is key for item to send,\n");
+	fprintf(STDERR,"fieldx is data to send send,\n");
+	fprintf(STDERR,"In itemx and fieldx are replaced this macros:\n");
+	fprintf(STDERR,"{COLUMN:x} is replaced by value of column x\n");
+	fprintf(STDERR,"{column:x} is replaced by lowercased value of column x\n");
+	fprintf(STDERR,"x can be column index (x starts with zero) or header name.\n");
+	fprintf(STDERR,"CSV must include header line.\n\n");
+	exit(1);
+}
+
+$csv=$argv[1];
+if ($csv=="-") {
+	$csv="php://stdin";
+}
+$delim=$argv[2];
+$mode=$argv[3];
+$items=Array();
+for ($i=4;$i<$argc;$i++) {
+	List($key,$field)=preg_split("/=/",$argv[$i]);
+	$items[]=Array(
+		"key" => $key,
+		"field" => $field
+	);
+}
+
+$c=fopen($csv,"r");
+
+$header=fgetcsv($c,false,$delim);
+
+$data="";
+while ($row=fgetcsv($c,false,$delim)) {
+	$p=get_replacements($header,$row);
+	foreach ($items as $item) {
+		$data.=sprintf("%s %s %s\n",
+			getenv("ZAF_HOSTNAME"),
+			preg_replace($p["patterns"],$p["replacements"],$item["key"]),
+			preg_replace($p["patterns"],$p["replacements"],$item["field"])
+		);
+	}
+}
+
+fclose($c);
+
+if ($mode=="send") {
+	$h = popen(getenv("ZAF_BIN")." send", "w");
+	fputs($h,$data);
+	fclose($h);
+	exit;
+}
+if ($mode=="stdout") {
+	echo $data;
+	exit;
+}
+
+fprintf(STDERR,"Bad mode $mode\n!");
+exit(1);
+
+
+

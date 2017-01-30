@@ -49,3 +49,20 @@ function json_end() {
 	echo ' ] }'."\n";
 }
 
+function get_replacements($header,$row) {
+	$patterns=Array();
+	$replacements=Array();
+	foreach ($header as $n=>$h) {
+		$patterns[]="/{COLUMN:$n}/";
+		$replacements[]=$row[$n];
+		$patterns[]="/{COLUMN:$h}/";
+		$replacements[]=$row[$n];
+		$patterns[]="/{column:$n}/";
+		$replacements[]=strtolower($row[$n]);
+		$patterns[]="/{column:$h}/";
+		$replacements[]=strtolower($row[$n]);
+	}
+	return(Array("patterns" => $patterns, "replacements" => $replacements));
+}
+
+

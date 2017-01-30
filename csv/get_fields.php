@@ -14,12 +14,15 @@ fclose($c);
 
 json_init();
 
-$last=end($header);
+$last1=end($header);
+$last2=end($range);
+
 foreach ($header as $num=>$column) {
 	if (!array_key_exists($num,$range)) continue;
 	json_row();
-	json_column("FIELD","$column",true); 
-	json_row_end($last==$column);
+	json_column("COLUMN",$num);
+	json_column("NAME",addslashes($column),true);
+	json_row_end($last1==$column||$last2==($num+1));
 }
 
 json_end();
