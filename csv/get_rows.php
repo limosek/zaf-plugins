@@ -18,7 +18,7 @@ if ($head) {
 } else {
 	$header=Array();
 	$i=0;
-	foreach ($range as $c) {
+	foreach ($range as $r) {
 		$header[$i]=sprintf("FIELD%d",$i);
 		$i++;
 	}

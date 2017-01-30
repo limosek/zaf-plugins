@@ -4,9 +4,10 @@ Booked is opensource reservation system using PHP. More info can be found at htt
 This Zaf plugin supports fetching informations from this system and find if there is some reservation in given time range.
 This is usefull for scripting and alerting. 
 
-If you need more info about installing zaf: https://github.com/limosek/zaf
-
 ## How to use
+
+**Note:** If you need more info about installing zaf: https://github.com/limosek/zaf
+**Note**: You can find more examples on [my site](https://macura.cz/search/node?keys=zaf)
 
 First, create account in Booked with required access to system and enable API. Next, simply install 
 ```

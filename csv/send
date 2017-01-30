@@ -3,13 +3,14 @@
 
 require_once(__DIR__."/functions.inc.php");
 
-if ($argc<5) {
+if ($argc<6) {
 	fprintf(STDERR,"Missing arguments!\n");
-	fprintf(STDERR,"send file.csv delim mode item1=field1 [item2=field2] ...\n");
+	fprintf(STDERR,"send file.csv delim mode hostfield [item1=field1] [item2=field2] ...\n");
 	fprintf(STDERR,"mode is stdout or send,\n");
+	fprintf(STDERR,"hostfield is host for item to send,\n");
 	fprintf(STDERR,"itemx is key for item to send,\n");
 	fprintf(STDERR,"fieldx is data to send send,\n");
-	fprintf(STDERR,"In itemx and fieldx are replaced this macros:\n");
+	fprintf(STDERR,"In hostfield, itemx and fieldx are replaced this macros:\n");
 	fprintf(STDERR,"{COLUMN:x} is replaced by value of column x\n");
 	fprintf(STDERR,"{column:x} is replaced by lowercased value of column x\n");
 	fprintf(STDERR,"x can be column index (x starts with zero) or header name.\n");
@@ -23,8 +24,9 @@ if ($csv=="-") {
 }
 $delim=$argv[2];
 $mode=$argv[3];
+$host=$argv[4];
 $items=Array();
-for ($i=4;$i<$argc;$i++) {
+for ($i=5;$i<$argc;$i++) {
 	List($key,$field)=preg_split("/=/",$argv[$i]);
 	$items[]=Array(
 		"key" => $key,
@@ -38,12 +40,14 @@ $header=fgetcsv($c,false,$delim);
 
 $data="";
 while ($row=fgetcsv($c,false,$delim)) {
+	if (count($row)==1 && trim($row[0])=="") continue;
 	$p=get_replacements($header,$row);
+	$hostr=preg_replace($p["patterns"],$p["replacements"],$host);
 	foreach ($items as $item) {
 		$data.=sprintf("%s %s %s\n",
-			getenv("ZAF_HOSTNAME"),
+			$hostr,
 			preg_replace($p["patterns"],$p["replacements"],$item["key"]),
-			preg_replace($p["patterns"],$p["replacements"],$item["field"])
+			addcslashes(preg_replace($p["patterns"],$p["replacements"],$item["field"]),"\0..\40\"")
 		);
 	}
 }

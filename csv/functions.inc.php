@@ -10,7 +10,7 @@ function terminate_on_strict($errno, $errstr, $errfile, $errline)
 }
 
 function parse_colnum($ranges) {
-	$groups=preg_split("/,/",$ranges);
+	$groups=preg_split("/[,_]/",$ranges);
 	foreach ($groups as $group) {
 		$range=preg_split("/-/",$group);
 		if (count($range)>1) {

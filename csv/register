@@ -27,6 +27,7 @@ $c=fopen($csv,"r");
 $header=fgetcsv($c,false,$delim);
 
 while ($row=fgetcsv($c,false,$delim)) {	
+	if (count($row)==1 && trim($row[0])=="") continue;
 	$p=get_replacements($header,$row);
 	$hostr=preg_replace($p["patterns"],$p["replacements"],$host);
 	$metadatar=preg_replace($p["patterns"],$p["replacements"],$metadata);
