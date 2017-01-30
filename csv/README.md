@@ -17,6 +17,7 @@ Defined items: csv.discovery.fields[] csv.discovery.rows[]
 ## How to use
 
 **Note:** If you need more info about installing zaf: https://github.com/limosek/zaf
+
 **Note**: You can find more examples on [my site](https://macura.cz/search/node?keys=zaf)
 
 Simply instal zaf and after, install csv plugin
@@ -78,20 +79,24 @@ Parameters:
 	delimiter ',' ''
 ```
 To discovery columns from CSV (first line of it).
+Csv:
+Name|Surname|Birth
+Jon|Doe|2030
+
 ```
 {
    "data" : [
       {
-         "{#NAME}" : "root",
+         "{#NAME}" : "Name",
          "{#COLUMN}" : "0"
       },
       {
-         "{#NAME}" : "x",
+         "{#NAME}" : "Surname",
          "{#COLUMN}" : "1"
       },
       {
+         "{#NAME}" : "Birth"
          "{#COLUMN}" : "2",
-         "{#NAME}" : "0"
       }
    ]
 }

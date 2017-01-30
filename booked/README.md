@@ -7,6 +7,7 @@ This is usefull for scripting and alerting.
 ## How to use
 
 **Note:** If you need more info about installing zaf: https://github.com/limosek/zaf
+
 **Note**: You can find more examples on [my site](https://macura.cz/search/node?keys=zaf)
 
 First, create account in Booked with required access to system and enable API. Next, simply install 
