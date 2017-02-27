@@ -1,0 +1,25 @@
+
+Plugin: csv
+
+Description::
+ Reporting pluginn for Zabbix. It can generate reports from Zabbix using API calls.
+::
+
+Version: 0.1
+
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/report
+Web: https://github.com/limosek/zaf-plugins/
+
+# Maintainer
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash php-cli
+Depends-opkg: busybox php
+Depends-bin: composer
+
+Install-files: functions.inc.php
+Install-cmd: query
+Install: 
+
+

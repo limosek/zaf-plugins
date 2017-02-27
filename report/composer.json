@@ -1,0 +1,6 @@
+{
+    "require": {
+        "cosenary/simple-php-cache": "dev-master",
+        "confirm-it-solutions/php-zabbix-api": "^2.4"
+    }
+}
