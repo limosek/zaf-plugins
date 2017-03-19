@@ -1,0 +1,124 @@
+
+Plugin: dovecot
+Description::
+ Plugin for monitoring dovecot and its sync status
+::
+
+Version: 0.1
+Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/dovecot
+Web: https://github.com/limosek/zaf-plugins/
+Maintainer: Lukas Macura <lukas@macura.cz>
+
+# Dependencies
+Depends-dpkg: dash
+Depends-opkg: busybox
+
+Item mailboxes.count:
+Description::
+ Count number of mailboxes
+::
+Parameters::
+ maildir 	'.*'	''	# global mail dir
+ partitions 	'(y|n)'	'y'	# If use partitions or not (y/n)
+::
+Script::
+if [ "$partitions" = "y" ]; then
+	ls -d ${maildir}/*/* | wc -l
+else
+	ls -d ${maildir}/* | wc -l
+fi
+::
+/Item
+
+Item sieve.count:
+Description::
+ Count number of sieve scripts
+::
+Parameters::
+ sievedir 	'.*'	''	# global sieve dir
+::
+Script::
+
+find ${sievedir} -type f -a -name '*.sieve' | wc -l
+
+::
+/Item
+
+Item sievec.count:
+Description::
+ Count number of compiled sieve scripts
+::
+Parameters::
+ sievedir 	'.*'	''	# global sieve dir
+::
+Script::
+
+find ${sievedir} -type f -a -name '*.svbin' | wc -l
+
+::
+/Item
+
+Item replicator.total:
+Description::
+ Total number of users to sync
+::
+Script::
+
+doveadm replicator status |grep Total | tr -s ' ' | cut -d ' ' -f 6
+
+::
+/Item
+
+Item replicator.qrequests:
+Description::
+ Number of queued sync requests
+::
+Parameters::
+ type 	'.*'	''	# Type
+::
+Script::
+
+doveadm replicator status | grep ^Queued | grep "'{$type}'" | tr -s ' ' | cut -d ' ' -f 4
+
+::
+/Item
+
+Item replicator.wrequests:
+Description::
+ Number of waiting sync requests
+::
+Parameters::
+ type 	'.*'	''	# Type
+::
+Script::
+
+doveadm replicator status | grep ^Waiting | grep "'{$type}'" | tr -s ' ' | cut -d ' ' -f 4
+
+::
+/Item
+
+Item dsync.active:
+Description::
+ Number of active dsync processes
+::
+
+Script::
+
+doveadm replicator dsync-status 2>/dev/null | grep -v "Not connected" | wc -l
+
+::
+/Item
+
+Item dsync.inactive:
+Description::
+ Number of inactive dsync processes
+::
+
+Script::
+
+doveadm replicator dsync-status 2>/dev/null | grep "Not connected" | wc -l
+
+::
+/Item
+
+

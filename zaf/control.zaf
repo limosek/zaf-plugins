@@ -22,7 +22,6 @@ Maintainer: Lukas Macura <lukas@macura.cz>
 # Dependencies
 Depends-dpkg: dash
 Depends-opkg: busybox
-Depends-rpm: dash
 
 Item framework_version:
 Description::
