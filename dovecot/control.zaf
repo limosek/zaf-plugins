@@ -4,7 +4,7 @@ Description::
  Plugin for monitoring dovecot and its sync status
 ::
 
-Version: 0.1
+Version: 0.2
 Url: https://raw.githubusercontent.com/limosek/zaf-plugins/master/dovecot
 Web: https://github.com/limosek/zaf-plugins/
 Maintainer: Lukas Macura <lukas@macura.cz>
@@ -78,7 +78,7 @@ Parameters::
 ::
 Script::
 
-doveadm replicator status | grep ^Queued | grep "'{$type}'" | tr -s ' ' | cut -d ' ' -f 4
+doveadm replicator status | grep ^Queued | grep "'$type'" | tr -s ' ' | cut -d ' ' -f 4
 
 ::
 /Item
@@ -92,7 +92,7 @@ Parameters::
 ::
 Script::
 
-doveadm replicator status | grep ^Waiting | grep "'{$type}'" | tr -s ' ' | cut -d ' ' -f 4
+doveadm replicator status | grep ^Waiting | grep "'$type'" | tr -s ' ' | cut -d ' ' -f 4
 
 ::
 /Item
